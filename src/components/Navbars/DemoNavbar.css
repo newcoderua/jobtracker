@@ -1,0 +1,9 @@
+.job-applications-header-main {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.job-applications-header-profile img {
+    max-width: 40px;
+    max-height: 40px;
+}

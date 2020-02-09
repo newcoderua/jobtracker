@@ -1,0 +1,46 @@
+.add-new-job-application-button-content {
+    display: flex;
+    justify-content: center;
+}
+
+.add-new-job-application-button {
+    display: inline-grid;
+}
+
+.add-new-job-application-button button {
+    border-radius: 25px;
+}
+
+.main-content-applied-jobs button {
+    border-radius: 3px 3px 0px 0px;
+}
+
+.main-content-applied-jobs-button-badge {
+    font-size: smaller;
+    margin-left: 5px !important;
+}
+
+.main-content-filters {
+    background: lightcoral;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-content-filters-search {
+    margin: 10px 1px;
+}
+
+.main-content-filters-sortby-filters {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.content-tab-button {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.content-main-applications-table {
+    /* border: 1px solid #50cbce; */
+    border-top: 0px;
+}
