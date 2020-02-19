@@ -7,3 +7,27 @@
     max-width: 40px;
     max-height: 40px;
 }
+
+.job-applications-header-profile-button-smaller-size {
+    display: none;
+}
+
+@media (max-width: 901px) {
+    .navbar-absolute .fixed-top .navbar-transparent  .navbar .navbar-expand-lg .bg-transparent {
+        display: flex;
+        justify-content: space-between;
+    }
+    .container-fluid {
+        width: 70%;
+    }
+    .job-applications-header-profile-button-smaller-size {
+        width: 30%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .job-applications-header-profile-button-smaller-size img {
+        max-height: 40px;
+        max-height: 40px;
+    }
+}

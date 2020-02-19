@@ -26,16 +26,26 @@ import "assets/scss/paper-dashboard.scss?v=1.1.0";
 import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import { configureStore } from '@reduxjs/toolkit'
+import rootReducer from './reducers'
+
 import AdminLayout from "layouts/Admin.jsx";
 
 const hist = createBrowserHistory();
+const store = configureStore({
+  reducer: rootReducer
+})
 
 ReactDOM.render(
-  <Router history={hist}>
-    <Switch>
-      <Route path="/admin" render={props => <AdminLayout {...props} />} />
-      <Redirect to="/admin/dashboard" />
-    </Switch>
-  </Router>,
+  <Provider store={store}>
+    <Router history={hist}>
+      <Switch>
+        <Route path="/admin" render={props => <AdminLayout {...props} />} />
+        <Redirect to="/admin/dashboard" />
+      </Switch>
+    </Router>
+  </Provider>,
   document.getElementById("root")
 );

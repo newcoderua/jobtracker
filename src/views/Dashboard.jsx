@@ -43,7 +43,8 @@ import {
   InputGroupAddon,
   Input,
   InputGroupText,
-  Badge
+  Badge,
+  Progress
 } from "reactstrap";
 // core components
 import {
@@ -52,10 +53,37 @@ import {
   dashboardNASDAQChart
 } from "variables/charts.jsx";
 import './Dashboard.css'
+import JobApplicationTab from "components/JobApplicationTab/job-application-tab-container";
+import JobApplicationGeneralInfo from "components/JobApplicationTab/job-application-general-info";
+// import Steps from 'rc-steps';
 // import Button from 'reactstrap/Button'
 // import Collapse from 'reactstrap/Collapse'
 // import Card from 'reactstrap/Card'
 // import CardBody from 'reactstrap/CardBody'
+
+const appliedJobApplications = [
+  {
+    date: '12.01.2019',
+    company: 'James Bond',
+    jobTitle: 'sniper',
+    salary: '500$',
+    location: 'secret'
+  },
+  {
+    date: '12.01.2020',
+    company: 'Google',
+    jobTitle: 'Clown',
+    salary: '1,000',
+    location: 'circus'
+  },
+  {
+    date: '12.02.2020',
+    company: 'Kovbasa',
+    jobTitle: 'butcher',
+    salary: '500.000',
+    location: 'Remote'
+  }
+]
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -63,7 +91,8 @@ class Dashboard extends React.Component {
     this.state = {
       isAppliedOpen: true,
       isSortByOpen: false,
-      isFiltersOpen: false
+      isFiltersOpen: false,
+      isAddNewApplicationModalOpen: false
     }
   }
 
@@ -73,8 +102,24 @@ class Dashboard extends React.Component {
         <div className="content">
           <div className="add-new-job-application-button-content">
             <div className="add-new-job-application-button">
-              <Button color="danger" onClick={() => {}}>+</Button>
+              <Button color="danger" onClick={() => this.setState({ isAddNewApplicationModalOpen: !this.state.isAddNewApplicationModalOpen })}>+</Button>
               <span>Add New</span>
+              <Modal isOpen={true/**this.state.isAddNewApplicationModalOpen**/} toggle={() => this.setState({ isAddNewApplicationModalOpen: !this.state.isAddNewApplicationModalOpen })}>
+                <ModalHeader toggle={() => this.setState({ isAddNewApplicationModalOpen: !this.state.isAddNewApplicationModalOpen })}>Add New Job</ModalHeader>
+                <ModalBody>
+                {/* <Progress multi className="add-new-job-application-progress-bar">
+                  <Progress bar value="100" className="passed">General</Progress>
+                  <Progress bar value="100">Job Description</Progress>
+                  <Progress bar value="100">Contacts</Progress>
+                  <Progress bar value="100">Attachments</Progress>
+                </Progress> */}
+                <JobApplicationGeneralInfo />
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="primary" onClick={() => this.setState({ isAddNewApplicationModalOpen: !this.state.isAddNewApplicationModalOpen })}>Do Something</Button>{' '}
+                  <Button color="secondary" onClick={() => this.setState({ isAddNewApplicationModalOpen: !this.state.isAddNewApplicationModalOpen })}>Cancel</Button>
+                </ModalFooter>
+              </Modal>
             </div>
           </div>
           <div className="main-content-filters">
@@ -116,53 +161,30 @@ class Dashboard extends React.Component {
               </div>
             </div>
           </div>
-          <div className="main-content-applied-jobs">
-            <Button color="primary" onClick={() => this.setState({ isAppliedOpen: !this.state.isAppliedOpen })} className="content-tab-button">
-              Applied
-              <Badge color="dark" className="main-content-applied-jobs-button-badge"> 3 </Badge>
-            </Button>
-            <Collapse isOpen={this.state.isAppliedOpen} className="content-main-applications-table">
-              <Table striped>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Collapse>
-          </div>
-          <div className="main-content-phone-screen-jobs">
-            <Button color="warning" onClick={() => {}} className="content-tab-button">Phone Screen</Button>
-          </div>
-          <div className="main-content-in-person-interview-jobs">
-            <Button color="success" onClick={() => {}} className="content-tab-button">In Person Interview</Button>
-          </div>
-          <div className="main-content-rejected-jobs">
-            <Button color="info" onClick={() => {}} className="content-tab-button">Rejected</Button>
-          </div>
+          <JobApplicationTab
+            jobApplications={appliedJobApplications}
+            tabColor="primary"
+            tabName="Applied"
+            isOpen
+          />
+          <JobApplicationTab
+            jobApplications={[]}
+            tabColor="warning"
+            tabName="Phone Screen"
+            isOpen={false}
+          />
+          <JobApplicationTab
+            jobApplications={[]}
+            tabColor="success"
+            tabName="In Person Interview"
+            isOpen={false}
+          />
+          <JobApplicationTab
+            jobApplications={[]}
+            tabColor="info"
+            tabName="Rejected"
+            isOpen={false}
+          />
           {/* <Row>
             <Col lg="3" md="6" sm="6">
               <Card className="card-stats">

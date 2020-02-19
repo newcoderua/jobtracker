@@ -144,11 +144,11 @@ class Header extends React.Component {
             </div>
             {/* <NavbarBrand href="/">{this.getBrand()}</NavbarBrand> */}
           </div>
-          <NavbarToggler onClick={this.toggle}>
+          {/* <NavbarToggler onClick={this.toggle}>
             <span className="navbar-toggler-bar navbar-kebab" />
             <span className="navbar-toggler-bar navbar-kebab" />
             <span className="navbar-toggler-bar navbar-kebab" />
-          </NavbarToggler>
+          </NavbarToggler> */}
           <Collapse
             isOpen={this.state.isOpen}
             navbar
@@ -196,6 +196,9 @@ class Header extends React.Component {
             </Nav>
           </Collapse>
         </Container>
+        <button className="job-applications-header-profile-button-smaller-size">
+          <Image src="https://i.pinimg.com/280x280_RS/f4/d6/af/f4d6af2e9943fa2a328288c204e2191d.jpg" fluid roundedCircle />
+        </button>
       </Navbar>
     );
   }
