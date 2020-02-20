@@ -68,6 +68,14 @@
     position: relative;
 }
 
+.add-new-job-application-modal {
+    padding: 0 3rem 1rem 3rem;
+}
+
+.job-applications-stepper-indicator {
+    margin-bottom: 2rem;
+}
+
 .content-tab-button-down {
     position: absolute !important;
     right: 10px;
@@ -127,3 +135,16 @@
     content:" *";
     color: red;
 }
+
+.ap-input-icon.ap-icon-clear {
+    display: none;
+}
+
+.job-application-modal-footer {
+    justify-content: space-between;
+}
+
+.apply-job-posting-link {
+    margin: 0 1rem;
+}
+

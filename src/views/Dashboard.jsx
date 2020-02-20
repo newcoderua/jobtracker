@@ -55,6 +55,7 @@ import {
 import './Dashboard.css'
 import JobApplicationTab from "components/JobApplicationTab/job-application-tab-container";
 import JobApplicationGeneralInfo from "components/JobApplicationTab/job-application-general-info";
+import Stepper from 'react-stepper-horizontal';
 // import Steps from 'rc-steps';
 // import Button from 'reactstrap/Button'
 // import Collapse from 'reactstrap/Collapse'
@@ -106,18 +107,24 @@ class Dashboard extends React.Component {
               <span>Add New</span>
               <Modal isOpen={true/**this.state.isAddNewApplicationModalOpen**/} toggle={() => this.setState({ isAddNewApplicationModalOpen: !this.state.isAddNewApplicationModalOpen })}>
                 <ModalHeader toggle={() => this.setState({ isAddNewApplicationModalOpen: !this.state.isAddNewApplicationModalOpen })}>Add New Job</ModalHeader>
-                <ModalBody>
-                {/* <Progress multi className="add-new-job-application-progress-bar">
-                  <Progress bar value="100" className="passed">General</Progress>
-                  <Progress bar value="100">Job Description</Progress>
-                  <Progress bar value="100">Contacts</Progress>
-                  <Progress bar value="100">Attachments</Progress>
-                </Progress> */}
-                <JobApplicationGeneralInfo />
+                <ModalBody className="add-new-job-application-modal">
+                  <div className="job-applications-stepper-indicator">
+                    <Stepper
+                      size={24}
+                      circleFontSize={12}
+                      titleFontSize={12}
+                      steps={ [{title: 'Step One'}, {title: 'Step Two'}, {title: 'Step Three'}, {title: 'Step Four'}] } activeStep={ 0 } />
+                  </div>
+                  <JobApplicationGeneralInfo />
                 </ModalBody>
-                <ModalFooter>
-                  <Button color="primary" onClick={() => this.setState({ isAddNewApplicationModalOpen: !this.state.isAddNewApplicationModalOpen })}>Do Something</Button>{' '}
-                  <Button color="secondary" onClick={() => this.setState({ isAddNewApplicationModalOpen: !this.state.isAddNewApplicationModalOpen })}>Cancel</Button>
+                <ModalFooter className="job-application-modal-footer">
+                  <div>
+                    <Button outline color="primary" onClick={() => this.setState({ isAddNewApplicationModalOpen: !this.state.isAddNewApplicationModalOpen })}>Cancel</Button>{' '}
+                  </div>
+                  <div>
+                  <Button color="link">Go back</Button>
+                    <Button color="primary" onClick={() => this.setState({ isAddNewApplicationModalOpen: !this.state.isAddNewApplicationModalOpen })}>Next</Button>
+                  </div>
                 </ModalFooter>
               </Modal>
             </div>

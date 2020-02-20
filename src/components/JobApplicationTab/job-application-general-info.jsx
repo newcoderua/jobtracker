@@ -30,6 +30,7 @@ import {
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 import places from 'places.js'
+import Select from 'react-select';
  
 import "react-datepicker/dist/react-datepicker.css";
 import '../../views/Dashboard.css'
@@ -40,21 +41,35 @@ class JobApplicationGeneralInfo extends React.Component {
 
         this.state = {
             isOpen: this.props.isOpen,
-            date: new Date()
+            date: new Date(),
+            selectedCompany: null,
+            companyOptions: []
         }
     }
 
     componentDidMount() {
+        //https://www.algolia.com/apps/pl8QSDTQNJI7/api-keys/all buy plan in the future
         const placesAutocomplete = places({
             appId: 'pl8QSDTQNJI7',
             apiKey: '733b89688631a321d9f3c12eb92dfb86',
             container: document.querySelector('#address-input')
         });
     }
+
+    handleCompanyChange = selectedCompany => {
+        // fetch()
+        console.log('yo')
+        this.setState({ selectedCompany })
+    }
     render() {
         const { jobApplications, tabColor, tabName  } = this.props
         const appliedArrowClassName = !this.state.isOpen ? 'nc-icon nc-minimal-down content-tab-button-down' : 'nc-icon nc-minimal-up content-tab-button-down'
         const isMobileSize = window.innerWidth <= 600
+        const options = [
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'vanilla', label: 'Vanilla' },
+          ];
         
         return (
             <Form>
@@ -77,6 +92,7 @@ class JobApplicationGeneralInfo extends React.Component {
                 <Row>
                     <Col className="center-content">
                         <Input className="autofill-job-application-input" />
+                        <Button color="primary" className="apply-job-posting-link">Apply</Button>
                     </Col>
                 </Row>
                 <Row>
@@ -121,7 +137,7 @@ class JobApplicationGeneralInfo extends React.Component {
                     <Col>
                         <FormGroup>
                             <Label for="jobTitle" className="required-field">Title</Label>
-                            <Input type="text" name="title" id="jobTitle" placeholder="Senior Software Engineer"/>
+                            <Input type="text" name="title" id="jobTitle" placeholder=""/>
                         </FormGroup>
                     </Col>
                 </Row>
@@ -129,15 +145,31 @@ class JobApplicationGeneralInfo extends React.Component {
                     <Col>
                         <FormGroup>
                             <Label for="company" className="required-field">Company</Label>
-                            <Input type="text" name="company" id="company" placeholder="Apple" />
+                            <Select
+                                value={this.state.selectedCompany}
+                                onChange={this.handleCompanyChange}
+                                onInputChange={(a) => {
+                                    a && fetch(`https://autocomplete.clearbit.com/v1/companies/suggest?query=${a}`, {
+                                        crossDomain:true,
+                                        method: 'GET',
+                                        headers: {'Content-Type':'application/json'}
+                                    })
+                                        .then(res => res.json())
+                                        .then(res => {
+                                            this.setState({ companyOptions: res.map(company => ({ value: company.name, label: company.name })) })
+                                            console.log(res)})}}
+                                isSearchable
+                                options={this.state.companyOptions}
+                            />
+                            <Input type="text" name="company" id="company" placeholder="" />
                         </FormGroup>
                     </Col>
                 </Row>
                 <Row>
                     <Col md={8}>
                         <FormGroup>
-                            {/* <Label for="address-input">Location</Label> */}
-                            <input type="search" id="address-input" className="form-control" />
+                            <Label for="address-input">Location</Label>
+                            <Input type="search" id="address-input" className="form-control" />
                         </FormGroup>
                     </Col>
                     <Col md={4}>
@@ -156,7 +188,7 @@ class JobApplicationGeneralInfo extends React.Component {
                     <Col>
                         <FormGroup>
                             <Label for="salary">Salary</Label>
-                            <Input type="text" name="salary" id="salary" placeholder="100k"/>
+                            <Input type="text" name="salary" id="salary" placeholder=""/>
                         </FormGroup>
                     </Col>
                 </Row>
@@ -164,7 +196,7 @@ class JobApplicationGeneralInfo extends React.Component {
                     <Col>
                         <FormGroup>
                             <Label for="jobPostingLink" className="required-field">Job posting Link</Label>
-                            <Input type="text" name="jobPostingLink" id="jobPostingLink" placeholder="https://www.linkedin.com/jobs/view/1738315972/?alternateChannel=jymbii"/>
+                            <Input type="text" name="jobPostingLink" id="jobPostingLink" placeholder=""/>
                         </FormGroup>
                     </Col>
                 </Row>
