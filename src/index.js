@@ -27,7 +27,7 @@ import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+// import { createStore } from 'redux'
 import { configureStore } from '@reduxjs/toolkit'
 import rootReducer from './reducers'
 

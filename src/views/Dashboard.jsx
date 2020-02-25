@@ -18,19 +18,19 @@
 */
 import React from "react";
 // react plugin used to create charts
-import { Line, Pie } from "react-chartjs-2";
+// import { Line, Pie } from "react-chartjs-2";
 // reactstrap components
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardTitle,
-  Row,
-  Col,
+  // Card,
+  // CardHeader,
+  // CardBody,
+  // CardFooter,
+  // CardTitle,
+  // Row,
+  // Col,
   Button,
-  Collapse,
-  Table,
+  // Collapse,
+  // Table,
   ButtonDropdown,
   DropdownToggle,
   DropdownMenu,
@@ -42,19 +42,20 @@ import {
   InputGroup,
   InputGroupAddon,
   Input,
-  InputGroupText,
-  Badge,
-  Progress
+  InputGroupText
+  // Badge,
+  // Progress
 } from "reactstrap";
 // core components
-import {
-  dashboard24HoursPerformanceChart,
-  dashboardEmailStatisticsChart,
-  dashboardNASDAQChart
-} from "variables/charts.jsx";
+// import {
+//   dashboard24HoursPerformanceChart,
+//   dashboardEmailStatisticsChart,
+//   dashboardNASDAQChart
+// } from "variables/charts.jsx";
 import './Dashboard.css'
 import JobApplicationTab from "components/JobApplicationTab/job-application-tab-container";
 import JobApplicationGeneralInfo from "components/JobApplicationTab/job-application-general-info";
+import JobApplicationDescription from "components/JobApplicationTab/job-application-description";
 import Stepper from 'react-stepper-horizontal';
 // import Steps from 'rc-steps';
 // import Button from 'reactstrap/Button'
@@ -93,7 +94,8 @@ class Dashboard extends React.Component {
       isAppliedOpen: true,
       isSortByOpen: false,
       isFiltersOpen: false,
-      isAddNewApplicationModalOpen: false
+      isAddNewApplicationModalOpen: false,
+      activeStep: 0
     }
   }
 
@@ -105,7 +107,7 @@ class Dashboard extends React.Component {
             <div className="add-new-job-application-button">
               <Button color="danger" onClick={() => this.setState({ isAddNewApplicationModalOpen: !this.state.isAddNewApplicationModalOpen })}>+</Button>
               <span>Add New</span>
-              <Modal isOpen={true/**this.state.isAddNewApplicationModalOpen**/} toggle={() => this.setState({ isAddNewApplicationModalOpen: !this.state.isAddNewApplicationModalOpen })}>
+              <Modal isOpen={this.state.isAddNewApplicationModalOpen} toggle={() => this.setState({ isAddNewApplicationModalOpen: !this.state.isAddNewApplicationModalOpen })}>
                 <ModalHeader toggle={() => this.setState({ isAddNewApplicationModalOpen: !this.state.isAddNewApplicationModalOpen })}>Add New Job</ModalHeader>
                 <ModalBody className="add-new-job-application-modal">
                   <div className="job-applications-stepper-indicator">
@@ -113,17 +115,26 @@ class Dashboard extends React.Component {
                       size={24}
                       circleFontSize={12}
                       titleFontSize={12}
-                      steps={ [{title: 'Step One'}, {title: 'Step Two'}, {title: 'Step Three'}, {title: 'Step Four'}] } activeStep={ 0 } />
+                      steps={ [{title: 'General Info'}, {title: 'Job Description'}, {title: 'Contacts'}, {title: 'Attachments'}] } activeStep={this.state.activeStep} />
                   </div>
-                  <JobApplicationGeneralInfo />
+                  {(this.state.activeStep === 0) && <JobApplicationGeneralInfo />}
+                  {(this.state.activeStep === 1) && <JobApplicationDescription />}
                 </ModalBody>
                 <ModalFooter className="job-application-modal-footer">
                   <div>
-                    <Button outline color="primary" onClick={() => this.setState({ isAddNewApplicationModalOpen: !this.state.isAddNewApplicationModalOpen })}>Cancel</Button>{' '}
+                    <Button color="link" onClick={() => {
+                      if (this.state.activeStep !== 0) {
+                        this.setState({ activeStep: this.state.activeStep - 1 })  
+                      }
+                      }}>Go back</Button>
                   </div>
                   <div>
-                  <Button color="link">Go back</Button>
-                    <Button color="primary" onClick={() => this.setState({ isAddNewApplicationModalOpen: !this.state.isAddNewApplicationModalOpen })}>Next</Button>
+                    <Button outline color="primary" onClick={() => this.setState({ isAddNewApplicationModalOpen: !this.state.isAddNewApplicationModalOpen })}>Cancel</Button>{' '}
+                    <Button color="primary" onClick={() => {
+                      if (this.state.activeStep !== 3) {
+                        this.setState({ activeStep: this.state.activeStep + 1 })  
+                      }
+                    }}>Next</Button>
                   </div>
                 </ModalFooter>
               </Modal>

@@ -13,25 +13,29 @@ import {
     FormGroup,
     Table,
     ButtonDropdown,
+    Dropdown,
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
     Modal,
     ModalHeader,
     ModalBody,
+    ListGroup,
+    ListGroupItem,
     ModalFooter,
     InputGroup,
     FormText,
     Input,
     Label,
-    Media
+    Media,
+    CustomInput
   } from "reactstrap";
 // used for making the prop types of this component
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 import places from 'places.js'
-import Select from 'react-select';
- 
+// import Select from 'react-select';
+import debounce from 'lodash/debounce'
 import "react-datepicker/dist/react-datepicker.css";
 import '../../views/Dashboard.css'
 
@@ -42,12 +46,16 @@ class JobApplicationGeneralInfo extends React.Component {
         this.state = {
             isOpen: this.props.isOpen,
             date: new Date(),
-            selectedCompany: null,
-            companyOptions: []
+            selectedCompany: '',
+            companyOptions: [],
+            companies: []
         }
+        this.companyInput = React.createRef();
+        // this.handleCompanyOnChange = this.handleCompanyOnChange.bind(this)
     }
 
     componentDidMount() {
+        document.addEventListener('click', this.handleClick)
         //https://www.algolia.com/apps/pl8QSDTQNJI7/api-keys/all buy plan in the future
         const placesAutocomplete = places({
             appId: 'pl8QSDTQNJI7',
@@ -56,11 +64,41 @@ class JobApplicationGeneralInfo extends React.Component {
         });
     }
 
-    handleCompanyChange = selectedCompany => {
-        // fetch()
-        console.log('yo')
-        this.setState({ selectedCompany })
+    componentWillUnmount() {
+        document.removeEventListener('click', this.handleClick)
     }
+
+    handleClick = e => {
+        // console.log(e.target.v/alue, 'vlad')
+        const ci = this.companyInput
+        // debugger
+
+        if (!ci.current.contains(e.target)) {
+            this.setState({ isCompanyDropdownOpen: false })
+        }
+    }
+
+    // handleCompanyChange = selectedCompany => {
+    //     // fetch()
+    //     this.setState({ selectedCompany })
+    // }
+
+    handleCompanyOnChange = debounce((currentValue) => {
+        // debugger
+        // const currentValue = val.target.value
+            currentValue && fetch(`https://autocomplete.clearbit.com/v1/companies/suggest?query=${currentValue}`, {
+                    crossDomain:true,
+                    method: 'GET',
+                    headers: {'Content-Type':'application/json'}
+                })
+                    .then(res => res.json())
+                    .then(res => {
+                        this.setState({
+                            isCompanyDropdownOpen: !!currentValue,
+                            companies: res
+                        })})
+    }, 300)
+
     render() {
         const { jobApplications, tabColor, tabName  } = this.props
         const appliedArrowClassName = !this.state.isOpen ? 'nc-icon nc-minimal-down content-tab-button-down' : 'nc-icon nc-minimal-up content-tab-button-down'
@@ -108,8 +146,8 @@ class JobApplicationGeneralInfo extends React.Component {
                 <Row>
                     <Col md={8}>
                         <FormGroup>
-                            <Label for="exampleSelect" className="required-field">Status</Label>
-                            <Input type="select" name="select" id="exampleSelect">
+                            <Label for="statusSelect" className="required-field">Status</Label>
+                            <Input type="select" name="select" id="statusSelect">
                                 <option>Applied</option>
                                 <option>Phone Interview</option>
                                 <option>In-Person Interview</option>
@@ -145,10 +183,12 @@ class JobApplicationGeneralInfo extends React.Component {
                     <Col>
                         <FormGroup>
                             <Label for="company" className="required-field">Company</Label>
-                            <Select
+                            {/* <Select
                                 value={this.state.selectedCompany}
+                                // inputValue={this.state.selectedCompany && this.state.selectedCompany.label}
                                 onChange={this.handleCompanyChange}
                                 onInputChange={(a) => {
+                                    this.setState({ isCompanyResultsRequested:})
                                     a && fetch(`https://autocomplete.clearbit.com/v1/companies/suggest?query=${a}`, {
                                         crossDomain:true,
                                         method: 'GET',
@@ -158,10 +198,39 @@ class JobApplicationGeneralInfo extends React.Component {
                                         .then(res => {
                                             this.setState({ companyOptions: res.map(company => ({ value: company.name, label: company.name })) })
                                             console.log(res)})}}
-                                isSearchable
+                                // isSearchable
                                 options={this.state.companyOptions}
-                            />
-                            <Input type="text" name="company" id="company" placeholder="" />
+                                onMenuOpen={() => this.setState({ selectedCompany: null, currentSelectedCompany: this.state.selectedCompany })}
+                                onMenuClose={() => {
+                                    !this.state.selectedCompany && this.setState({ selectedCompany: this.state.currentSelectedCompany, currentSelectedCompany: null })}}
+                                autoFocus
+                                isLoading
+                            /> */}
+                            <div className="logo-company-name-container" ref={this.companyInput}>
+                                {this.state.selectedCompanyLogo && <img className="companies-dropdown-logo" src={this.state.selectedCompanyLogo} />}
+                                <Input
+                                    onFocus={() => this.setState({ isCompanyDropdownOpen: true })}
+                                    // onBlur={() => this.setState({ isCompanyDropdownOpen: false })}
+                                    value={this.state.selectedCompany}
+                                    onChange={e => {
+                                        const currentValue = e.target.value
+                                        this.setState({ selectedCompany: currentValue }, () => {
+                                            this.handleCompanyOnChange(currentValue)       
+                                        })
+                                    }}
+                                />
+                            </div>
+                            {this.state.isCompanyDropdownOpen && 
+                                <ListGroup>
+                                    {this.state.companies.map(company => {
+                                        return (
+                                            <div onClick={() => this.setState({ selectedCompanyLogo: company.logo, selectedCompany: company.name, isCompanyDropdownOpen: false })}>
+                                                <ListGroupItem action><img className="companies-dropdown-logo" src={company.logo} />{company.name}</ListGroupItem>
+                                            </div>
+                                        )
+                                    })}
+                                </ListGroup>
+                            }
                         </FormGroup>
                     </Col>
                 </Row>
@@ -195,7 +264,7 @@ class JobApplicationGeneralInfo extends React.Component {
                 <Row>
                     <Col>
                         <FormGroup>
-                            <Label for="jobPostingLink" className="required-field">Job posting Link</Label>
+                            <Label for="jobPostingLink">Job posting Link</Label>
                             <Input type="text" name="jobPostingLink" id="jobPostingLink" placeholder=""/>
                         </FormGroup>
                     </Col>

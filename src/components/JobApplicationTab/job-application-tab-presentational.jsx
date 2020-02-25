@@ -69,9 +69,9 @@ class JobApplicationTab extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {jobApplications.map(jobApplication => {
+                            {jobApplications.map((jobApplication, i) => {
                                 return (
-                                    <tr>
+                                    <tr key={`${i}_${jobApplication.name}`}>
                                         {!isMobileSize && <td scope="row">{jobApplication.date}</td>}
                                         <td>{jobApplication.company}</td>
                                         <td>{jobApplication.jobTitle}</td>

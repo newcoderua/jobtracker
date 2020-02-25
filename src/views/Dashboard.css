@@ -148,3 +148,78 @@
     margin: 0 1rem;
 }
 
+.companies-dropdown-logo {
+    width: 40px;
+    height: auto;
+    margin-right: .5rem;
+}
+
+.logo-company-name-container {
+    display: flex;
+}
+
+.job-skills-section-header {
+    display: flex;
+}
+
+.job-skills-add-button {
+    margin: 0;
+}
+
+.job-description-textarea {
+    display: block;
+    width: 100%;
+    height: 8rem;
+}
+
+@media (max-width: 600px) {
+    .job-description-textarea {
+        border: 1px solid black;
+    }
+}
+
+.job-application-description-row {
+    margin-bottom: 2rem;
+}
+
+.job-skills-section-header-label {
+    display: flex;
+}
+
+.information-icon {
+    display: flex;
+    align-items: center;
+    margin-left: .5rem;
+    margin-bottom: .5rem;
+}
+
+.information-icon:before {
+    color: #4679a6;
+}
+
+.job-application-search-icon {
+    display: flex;
+    align-items: center;
+    margin: 0 .5rem;
+}
+
+.job-skills-section-reactstrap-search-input {
+    border: 0;
+    width: 100%;
+}
+
+.job-skills-section-search-input {
+    border: 1px solid #a9a2a2;
+    display: flex;
+    width: 100%;
+}
+
+.margin-bottom-one-rem {
+    margin-bottom: 1rem;
+}
+
+.MuiChip-root.MuiChip-colorPrimary.MuiChip-deletableColorPrimary.MuiChip-deletable,
+.MuiChip-root.MuiChip-colorPrimary.MuiChip-outlined.MuiChip-outlinedPrimary,
+.MuiButtonBase-root.MuiChip-root.MuiChip-colorPrimary.MuiChip-clickableColorPrimary.MuiChip-sizeSmall.MuiChip-clickable {
+    margin: 0 .5rem .5rem 0;
+}

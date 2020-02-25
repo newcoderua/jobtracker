@@ -17,23 +17,12 @@
 
 */
 import React from "react";
-import { Link } from "react-router-dom";
 import {
   Collapse,
   Navbar,
-  NavbarToggler,
-  NavbarBrand,
   Nav,
   NavItem,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Container,
-  InputGroup,
-  InputGroupText,
-  InputGroupAddon,
-  Input
+  Container
 } from "reactstrap";
 import Image from 'react-bootstrap/Image'
 
