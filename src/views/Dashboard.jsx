@@ -56,6 +56,7 @@ import './Dashboard.css'
 import JobApplicationTab from "components/JobApplicationTab/job-application-tab-container";
 import JobApplicationGeneralInfo from "components/JobApplicationTab/job-application-general-info";
 import JobApplicationDescription from "components/JobApplicationTab/job-application-description";
+import JobApplicationContacts from "components/JobApplicationTab/job-application-contacts";
 import Stepper from 'react-stepper-horizontal';
 // import Steps from 'rc-steps';
 // import Button from 'reactstrap/Button'
@@ -119,6 +120,7 @@ class Dashboard extends React.Component {
                   </div>
                   {(this.state.activeStep === 0) && <JobApplicationGeneralInfo />}
                   {(this.state.activeStep === 1) && <JobApplicationDescription />}
+                  {(this.state.activeStep === 2) && <JobApplicationContacts />}
                 </ModalBody>
                 <ModalFooter className="job-application-modal-footer">
                   <div>
