@@ -57,6 +57,7 @@ import JobApplicationTab from "components/JobApplicationTab/job-application-tab-
 import JobApplicationGeneralInfo from "components/JobApplicationTab/job-application-general-info";
 import JobApplicationDescription from "components/JobApplicationTab/job-application-description";
 import JobApplicationContacts from "components/JobApplicationTab/job-application-contacts";
+import JobApplicationAttachments from 'components/JobApplicationTab/job-application-attachments';
 import Stepper from 'react-stepper-horizontal';
 // import Steps from 'rc-steps';
 // import Button from 'reactstrap/Button'
@@ -121,6 +122,7 @@ class Dashboard extends React.Component {
                   {(this.state.activeStep === 0) && <JobApplicationGeneralInfo />}
                   {(this.state.activeStep === 1) && <JobApplicationDescription />}
                   {(this.state.activeStep === 2) && <JobApplicationContacts />}
+                  {(this.state.activeStep === 3) && <JobApplicationAttachments />}
                 </ModalBody>
                 <ModalFooter className="job-application-modal-footer">
                   <div>
@@ -136,7 +138,7 @@ class Dashboard extends React.Component {
                       if (this.state.activeStep !== 3) {
                         this.setState({ activeStep: this.state.activeStep + 1 })  
                       }
-                    }}>Next</Button>
+                    }}>{this.state.activeStep === 3 ? 'Save' : 'Next'}</Button>
                   </div>
                 </ModalFooter>
               </Modal>

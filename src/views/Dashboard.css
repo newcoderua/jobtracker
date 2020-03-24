@@ -72,6 +72,12 @@
     padding: 0 3rem 1rem 3rem;
 }
 
+@media (max-width: 600px) {
+    .add-new-job-application-modal {
+        padding: 0 1rem 1rem 1rem;
+    }
+}
+
 .job-applications-stepper-indicator {
     margin-bottom: 2rem;
 }
@@ -261,4 +267,120 @@
 .job-application-contacts-company-info-links {
     display: flex;
     justify-content: space-between;
+}
+
+.dreamCompanyButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border-radius: 10px;
+}
+
+.dreamCompanyButton i {
+    margin-right: .5rem;
+}
+
+.dreamCompanyButton .clicked:before {
+    color: #ae0d0d;
+}
+
+.companyLink {
+    margin-bottom: .5rem;
+}
+
+.recruiter-full-name {
+    margin-bottom: .5rem;
+}
+
+.recruiter-contact-info {
+    margin-top: 1.5rem;
+}
+
+.job-application-attachments-resume-title, .job-application-attachments-cover-letter-title {
+    font-weight: 600;
+}
+
+.job-application-attachments-choose-recent {
+    font-size: small;
+}
+
+.job-application-attachments-recent-resumes, .job-application-attachments-recent-cvs {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid lightgray;
+    border-radius: 1px;
+    padding: 1rem;
+}
+
+.job-application-attachaments-choose {
+    display: flex;
+    justify-content: space-between;
+}
+
+.job-application-attachments-choose-recent-button {
+    margin: 0 .5rem;
+    color: #4343e9;
+    font-weight: 600;
+    border: none;
+}
+
+.job-application-attachments-download-recent-button {
+    width: 30px;
+    background: none;
+    border: none;
+}
+
+.job-application-attachments-choose-from-device-button {
+    margin-top: 1rem;
+    display: none;
+}
+
+.job-application-attachments-resume-label, .job-application-attachments-cv-label {
+    display: block;
+    margin: 0;
+}
+
+.job-application-attachments-resume-timestamp, .job-application-attachments-cv-timestamp {
+    font-weight: 200;
+    font-size: small;
+}
+
+.job-application-attachments-picked-resume, .job-application-attachments-picked-cv {
+    display: flex;
+    width: 15rem;
+    border: 1px solid black;
+}
+
+.job-application-attachments-picked-resume-type, .job-application-attachments-picked-cv-type {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    background: lightblue;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+}
+
+.job-application-attachments-picked-resume-name, .job-application-attachments-picked-cv-name {
+    display: flex;
+    width: 70%;
+    padding: .5rem 1rem; 
+}
+
+.job-application-attachments-picked-resume-delete-button, .job-application-attachments-picked-cv-delete-button {
+    border: none;
+    background: none;
+}
+
+.job-application-attachments-upload-resume-label {
+    border: 1px solid blue;
+    margin: 1rem 0;
+    padding: .5rem;
+    color: blue;
+    font-weight: 600;
+}
+
+.job-application-attachments-upload-resume-label:hover {
+    background: lightblue;
 }
